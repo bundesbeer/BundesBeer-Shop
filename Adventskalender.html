@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BundesBeer Adventskalender</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'christmas-red': '#B22222',
+                        'christmas-green': '#006400',
+                        'christmas-gold': '#FFD700',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+        
+        .advent-font {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        /* Styling für die Türen (Schnee-Effekt) */
+        .door-card {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border: 4px solid #FFD700; /* Goldener Rahmen */
+            background-image: linear-gradient(135deg, #B22222 0%, #8B0000 100%);
+        }
+
+        .door-card:hover:not(.door-disabled) {
+            transform: scale(1.03);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Stil für geöffnete Türen */
+        .door-opened {
+            background-image: linear-gradient(135deg, #006400 0%, #004d00 100%);
+            cursor: default;
+        }
+
+        /* Stil für zukünftige/gesperrte Türen */
+        .door-disabled {
+            filter: grayscale(80%);
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        /* Überlagerung für den Modal-Hintergrund */
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen p-4 sm:p-8 flex flex-col items-center">
+
+    <header class="text-center mb-8">
+        <h1 class="text-5xl sm:text-7xl font-bold advent-font text-christmas-red">
+            BundesBeer Adventskalender
+        </h1>
+        <p id="current-date-info" class="mt-2 text-lg text-gray-700">Lade Daten...</p>
+    </header>
+
+    <!-- Der Gitter-Container für die 24 Türchen -->
+    <div id="calendar-grid" class="w-full max-w-6xl grid grid-cols-4 sm:grid-cols-6 gap-4">
+        <!-- Die Türchen werden hier per JavaScript eingefügt -->
+    </div>
+
+    <!-- Das Modal (Pop-up) -->
+    <div id="door-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center modal-overlay transition-opacity duration-300 opacity-0" onclick="closeModal()">
+        <div class="bg-white rounded-xl shadow-2xl p-6 w-11/12 max-w-md transform transition-all duration-300 scale-95" onclick="event.stopPropagation()">
+            <h2 id="modal-title" class="text-3xl font-bold advent-font text-christmas-green mb-4 border-b pb-2">Tür #</h2>
+            <div id="modal-content" class="text-gray-800 text-lg mb-6">Inhalt des Türchens.</div>
+            <button onclick="closeModal()" class="w-full bg-christmas-red hover:bg-red-800 text-white font-bold py-3 px-4 rounded-lg transition duration-200 shadow-md">
+                Schließen
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const TEST_DAY = null; // Setze auf eine Zahl von 1-24 zum Testen, oder null für aktuelles Datum
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        const MAX_ADVENT_DAY = 24;
+        const doorContents = [
+            // ... (Inhalt bleibt unverändert)
+            "User: elischmel, zur Feier der Eröffnung des BB-Shops darfst du dir ein Einzelprodukt deiner Wahl aus dem Shop aussuchen 👕",
+            "User: whippedcreamqueenofrdr, die BB-Weihnachtsmütze gehört dir🧢!",
+            "User: sarah_0208, du bekommst eine mini Merch-Box📦",
+            "User: wolvii, für dich haben wir ein Bierli in der Weihnachtskugel 🎄",
+            "User: sudelnoup, du bekommst eine mini Merch-Box📦",
+            "User: thresenlinskii, für dich hat Bierli seine exklusiven Weihnachtssocken bereitgelegt 🧦",
+            "User: papermuigg, du bekommst eine mini Merch-Box📦",
+            "User: oobloodshadeoo, für dich haben wir ein BundesBeer-Banner 🎉",
+            "User: haenger74, du bekommst eine mini Merch-Box📦",
+            "User: Melith, du bekommst einen unseren allerersten Bierli Mini-Aufsteller ✨.",
+            "User: Lillydayo, für dich gibt es 6 Monate Elitekreis 🏆",
+            "User: harald__krull, Halbzeit! ⏱️ Du darfst dir eins der BB-Meme-Shirts aussuchen 👕 ",
+            "User: tanaye, du bekommst eine mini Merch-Box📦",
+            "User: helenfire, die zweite BB-Weihnachtsmütze gehört dir🧢!",
+            "User: trueedani, du bekommst eine mini Merch-Box📦",
+            "User: esdeath.r, für dich hat Bierli seine exklusiven Weihnachtssocken bereitgelegt 🧦",
+            "User: stressi004, für dich haben wir ein Bierli in der Weihnachtskugel 🎄",
+            "User: friedhofswaerter, für dich gibt es 6 Monate Elitekreis 🏆",
+            "User: nexoru, du bekommst einen unseren allerersten Bierli Mini-Aufsteller ✨",
+            "User: christoph28, du bekommst eine mini Merch-Box📦",
+            "User: andreeeeaelena, für dich haben wir ein BundesBeer-Banner 🎉",
+            "User: kapilel_, du bekommst eine mini Merch-Box📦",
+            "User: dergallenlose, für dich gibt es 6 Monate Elitekreis 🏆",
+            "User: anaustrianlittlefellow, zum Abschluss darfst du dir ein Einzelprodukt deiner Wahl aus dem Shop aussuchen 👕"
+        ];
+
+        
+    
+        function getCurrentAdventDay() {
+            if (TEST_DAY !== null) {
+                return Math.min(Math.max(1, TEST_DAY), MAX_ADVENT_DAY);
+            }
+
+            // NEU: Ruft das Datum explizit in der Zeitzone 'Europe/Vienna' ab
+            const wienDateString = new Date().toLocaleString("de-DE", {timeZone: "Europe/Vienna"});
+            const wienDate = new Date(wienDateString);
+
+            // Stattdessen können wir auch direkt die Komponenten im Wiener Kontext abrufen:
+            const currentMonth = parseInt(new Intl.DateTimeFormat('en-US', { month: 'numeric', timeZone: 'Europe/Vienna' }).format(new Date()));
+            const currentDay = parseInt(new Intl.DateTimeFormat('en-US', { day: 'numeric', timeZone: 'Europe/Vienna' }).format(new Date()));
+
+            // WICHTIG: Die Monate sind hier 1-basiert, da wir sie als String-Formatierung abrufen!
+            if (currentMonth !== 12) { // 12 steht für Dezember
+                return 0; 
+            }
+
+            // Gib den aktuellen Tag zurück, maximal 24
+            return Math.min(currentDay, MAX_ADVENT_DAY);
+        }
+
+        const todayDay = getCurrentAdventDay();
+
+        // Zeige die aktuelle Info an
+        const dateInfoElement = document.getElementById('current-date-info');
+        if (TEST_DAY !== null) {
+            dateInfoElement.innerHTML = `Türen bis Tag ${todayDay} sind geöffnet.`;
+        } else {
+            if (todayDay === 0) {
+                 dateInfoElement.innerHTML = `Der Kalender startet am 1. Dezember! Alle Türen sind verschlossen. (Zeitbasis: Wien)`;
+            } else {
+                 dateInfoElement.innerHTML = `Heute ist der ${todayDay}. Adventstag. (Zeitbasis: Wien)`;
+            }
+        }
+
+
+        // === FUNKTIONEN FÜR DAS MODAL (POP-UP) ===
+
+        // ... (Der Rest des Codes ist gleich)
+
+        // === FUNKTIONEN FÜR DAS MODAL (POP-UP) ===
+
+        const modal = document.getElementById('door-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalContent = document.getElementById('modal-content');
+
+        function openModal(day) {
+            if (day < 1 || day > MAX_ADVENT_DAY) return;
+            
+            modalTitle.textContent = `Tür ${day} 🎁`;
+            modalContent.innerHTML = doorContents[day - 1]; // Array ist 0-basiert
+            
+            modal.classList.remove('hidden', 'opacity-0');
+            modal.classList.add('flex');
+            
+            // Verzögerung, um den Übergangseffekt zu starten
+            setTimeout(() => {
+                modal.style.opacity = '1';
+                modal.querySelector('div').classList.remove('scale-95');
+                modal.querySelector('div').classList.add('scale-100');
+            }, 10);
+        }
+
+        /** Schließt das Modal. */
+        function closeModal() {
+            modal.style.opacity = '0';
+            modal.querySelector('div').classList.remove('scale-100');
+            modal.querySelector('div').classList.add('scale-95');
+
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden', 'opacity-0');
+            }, 300); // Entspricht der Transitions-Dauer in CSS
+        }
+
+
+        // === GENERIEREN DER TÜRENCHEN ===
+
+        const calendarGrid = document.getElementById('calendar-grid');
+
+        for (let i = 1; i <= MAX_ADVENT_DAY; i++) {
+            const door = document.createElement('div');
+            door.id = `door-${i}`;
+            
+            let doorClass = 'door-card text-white font-extrabold text-4xl aspect-square flex flex-col items-center justify-center rounded-lg cursor-pointer transition duration-300 relative overflow-hidden';
+            
+            let isClickable = false;
+
+            if (i < todayDay) {
+                // Tür ist bereits geöffnet (Vergangenheit)
+                doorClass += ' door-opened';
+            } else if (i === todayDay) {
+                // Aktueller Tag: Tür kann geöffnet werden
+                doorClass += ' hover:bg-red-700 bg-christmas-red animate-pulse';
+                isClickable = true;
+            } else {
+                // Tür liegt in der Zukunft
+                doorClass += ' door-disabled';
+                // Füge ein Schlosssymbol hinzu, um anzuzeigen, dass sie gesperrt ist
+                door.innerHTML += '<span class="absolute top-1 right-2 text-xl text-yellow-300">🔒</span>';
+            }
+
+            // Füge das Tag-Label hinzu
+            door.innerHTML += `<span class="advent-font text-6xl drop-shadow-lg">${i}</span>`;
+            
+            // Wichtig: Füge die Klassen am Ende hinzu
+            door.className = doorClass;
+
+            if (isClickable || i < todayDay) {
+                // Türen in der Vergangenheit und die aktuelle Tür sind klickbar
+                door.onclick = () => openModal(i);
+            } else {
+                // Gesperrte Türen sind nicht klickbar
+                door.onclick = () => { 
+                    // Optional: Eine visuelle Rückmeldung für gesperrte Türen
+                    const originalBorder = door.style.borderColor;
+                    door.style.borderColor = 'gray';
+                    setTimeout(() => door.style.borderColor = originalBorder, 200);
+                };
+            }
+
+            calendarGrid.appendChild(door);
+        }
+    </script>
+</body>
+</html>

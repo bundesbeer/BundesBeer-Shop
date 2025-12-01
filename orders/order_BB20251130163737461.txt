@@ -1,0 +1,17 @@
+=== Bundesbeer Bestellung ===
+Bestell-ID: BB20251130163737461
+Zeit: 2025-11-30 16:37:37
+
+Kunde: test
+E-Mail: kurz.christoph.ck@gmail.com
+Discord: etst
+Adresse:
+test
+
+Produkte:
+[MERCH] 1x Bierli Jogginshose + Hoodie & Kappe & Shirt (Größe: XXL) (Farbe: Weiß) — 72.00 €
+
+Summe: 72.00 €
+
+Zahlung per PayPal Friends an:
+https://www.paypal.com/paypalme/calyndris

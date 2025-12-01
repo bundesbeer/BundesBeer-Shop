@@ -1,0 +1,17 @@
+=== Bundesbeer Bestellung ===
+Bestell-ID: BB20251130202402149
+Zeit: 2025-11-30 20:24:02
+
+Kunde: test
+E-Mail: kurz.christoph.ck@gmail.com
+Discord: test
+Adresse:
+test
+
+Produkte:
+[MEME] 1x Funny Bierli Shirt (Größe: XS) (Farbe: Schwarz) — 17.00 €
+
+Summe: 17.00 €
+
+Zahlung per PayPal Friends an:
+https://www.paypal.com/paypalme/calyndris

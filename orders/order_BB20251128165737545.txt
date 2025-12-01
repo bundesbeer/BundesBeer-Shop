@@ -1,0 +1,17 @@
+=== Bundesbeer Bestellung ===
+Bestell-ID: BB20251128165737545
+Zeit: 2025-11-28 16:57:37
+
+Kunde: test
+E-Mail: kurz.christoph.ck@gmail.com
+Discord: test
+Adresse:
+test
+
+Produkte:
+1x Bierli Shirt + Kappe (Bundle) — 27.00 €
+
+Summe: 27.00 €
+
+Zahlung per PayPal Friends an:
+https://www.paypal.com/paypalme/calyndris

@@ -1,0 +1,145 @@
+[
+    {
+        "id": "bierli-shirt-kappe-1242",
+        "name": "Bierli Shirt + Kappe",
+        "price": 27,
+        "img": "\/test\/uploads\/bierli-shirt-kappe-1242.png",
+        "sizes": [
+            "XS",
+            "S",
+            "M",
+            "L",
+            "XL",
+            "XXL"
+        ],
+        "colors": [
+            "Schwarz",
+            "Rot",
+            "Wei\u00df"
+        ],
+        "category": "merch",
+        "": {
+            "category": "custom"
+        }
+    },
+    {
+        "id": "hoodie-kappe-shirt-8831",
+        "name": "Bierli Hoodie + Kappe & Shirt",
+        "price": 52,
+        "img": "\/test\/uploads\/hoodie-kappe-shirt-8831.png",
+        "sizes": [
+            "XS",
+            "S",
+            "M",
+            "L",
+            "XL",
+            "XXL"
+        ],
+        "colors": [
+            "Schwarz",
+            "Rot",
+            "Wei\u00df"
+        ],
+        "category": "merch",
+        "": {
+            "category": "custom"
+        }
+    },
+    {
+        "id": "bierli-jogginshose-hoodie-kappe-shirt-3822",
+        "name": "Bierli Jogginshose + Hoodie & Kappe & Shirt",
+        "price": 72,
+        "img": "\/test\/uploads\/bierli-jogginshose-hoodie-kappe-shirt-3822.png",
+        "sizes": [
+            "XS",
+            "S",
+            "M",
+            "L",
+            "XL",
+            "XXL"
+        ],
+        "colors": [
+            "Schwarz",
+            "Rot",
+            "Wei\u00df"
+        ],
+        "category": "merch"
+    },
+    {
+        "id": "pullover-4039",
+        "name": "Pullover",
+        "price": 27,
+        "img": "\/test\/uploads\/pullover-4039.png",
+        "sizes": [
+            "XS",
+            "S",
+            "M",
+            "L",
+            "XL",
+            "XXL"
+        ],
+        "colors": [
+            "Schwarz",
+            "Rot",
+            "Wei\u00df"
+        ],
+        "category": "custom"
+    },
+    {
+        "id": "test-4797",
+        "name": "Test",
+        "price": 23,
+        "img": "\/test\/uploads\/test-4797.png",
+        "sizes": [
+            "XS",
+            "S",
+            "M",
+            "L",
+            "XL",
+            "XXL"
+        ],
+        "colors": [
+            "Schwarz",
+            "Rot",
+            "Wei\u00df"
+        ],
+        "category": "meme"
+    },
+    {
+        "id": "test-5050",
+        "name": "Test",
+        "price": 23,
+        "img": "\/test\/uploads\/test-5050.png",
+        "sizes": [
+            "XS",
+            "S",
+            "M",
+            "L",
+            "XL",
+            "XXL",
+            "XXXL"
+        ],
+        "colors": [
+            "Schwarz",
+            "Rot",
+            "Wei\u00df"
+        ],
+        "category": "merch",
+        "": {
+            "category": "custom"
+        }
+    },
+    {
+        "id": "teast-4365",
+        "name": "teast",
+        "price": 23,
+        "img": "\/test\/uploads\/teast-4365.png",
+        "sizes": [
+            "dwaw"
+        ],
+        "colors": [
+            "dwadas"
+        ],
+        "category": "merch"
+    }
+]
