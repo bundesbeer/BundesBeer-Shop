@@ -205,217 +205,220 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["checkout_flag"])) {
 <title>Bundesbeer – Merch Bundles</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
+:root {
+    --dark-blue: #0a192f;
+    --card-bg: rgba(255, 255, 255, 0.98);
+    --accent-yellow: #ffcc00;
+    --accent-red: #e63946;
+    --primary-blue: #112240;
+    --text-dark: #0a192f;
+}
+
+/* Animierter Hintergrund: Schwarz -> Dunkelblau -> Blau */
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: url('/test/img/beer-10.gif') no-repeat center center fixed;
-    background-size: cover;
-    color: #2b1d05;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(270deg, #000000, #0a192f, #1a3a5f);
+    background-size: 600% 600%;
+    animation: backgroundAnimation 15s ease infinite;
+    color: #ffffff;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 100vh;
 }
 
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: rgba(250, 231, 165, 0.65); /* Biergelber Soft-Overlay */
-    z-index: -1;
+@keyframes backgroundAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
-.container { max-width:1100px; margin:auto; padding:15px; }
-.logo { font-size:32px; }
+.container { 
+    max-width: 1100px; 
+    margin: auto; 
+    padding: 15px; 
+    box-sizing: border-box;
+}
+
+header {
+    background: rgba(10, 25, 47, 0.85);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 10px 0;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--accent-yellow);
+    text-transform: uppercase;
+}
+
+/* Responsive Grid für Handy & PC */
+.product-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+    gap: 25px; 
+    margin-bottom: 40px;
+}
+
+@media (max-width: 480px) {
+    .product-grid { grid-template-columns: 1fr; }
+    .drawer-panel { width: 100% !important; }
+    .news-nav { padding: 10px 5px; font-size: 20px; }
+}
+
 .card {
-    background: white;
-    border: 2px solid #e5d6a3;
-    border-radius: 14px;
-    padding: 15px;
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
+    color: var(--text-dark);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
     height: 100%;
-    margin: 0 !important; /* entfernt den ungewollten extra-Abstand */
+    box-sizing: border-box;
+    transition: transform 0.3s ease;
 }
 
-.card-inner {
-    display: flex;
-    flex-direction: column;
-    flex: 1; /* füllt den Platz */
-}
+.card:hover { transform: translateY(-5px); }
 
-.card-inner h3 {
-    margin-top: 10px;
-}
-
-.card-inner .price {
-    margin-bottom: 10px;
-}
-
-.add-btn {
-    margin-top: auto; /* ⭐ Schiebt den Button nach unten */
-}
-
-.btn {
-    padding:10px 14px;
-    border:none;
-    border-radius:12px;
-    cursor:pointer;
-    
-}
-.btn-primary { background:#d29e17; color:white; }
-.btn-dark { background:#2b1d05; color:white; }
-.btn-danger { background:#c0392b; color:white; }
-.product-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:15px; }
-.field { width:100%; padding:10px; border:2px solid #ebca75; border-radius:10px; margin-bottom:10px; }
-.drawer {
-    position:fixed; inset:0; background:rgba(0,0,0,.6);
-    display:none; justify-content:flex-end;
-}
-.drawer.open { display:flex; }
-.drawer-panel {
-    background:white; width:420px; height:100%; padding:20px; overflow:auto;
-}
-.qty-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 8px;
-}
-
-.qty-btn {
-    background: #3a2a06;
-    color: white;
-    font-size: 20px;
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    transition: background .2s;
-}
-
-.qty-btn:hover {
-    background: #5c410a;
-}
-
-.qty-number {
-    font-size: 18px;
-    font-weight: bold;
-    width: 30px;
-    text-align: center;
-}
 .product-img {
     width: 100%;
-    height: 160px;         /* feste Höhe für alle Bilder */
-    object-fit: cover;     /* schneidet passend zu */
-    border-radius: 10px;
-    background: #eee;      /* grauer Hintergrund falls Bild lädt */
-}
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    row-gap: 20px; /* VERTIKALER ABSTAND */
-    column-gap: 20px; /* HORIZONTALER ABSTAND */
-}
-.card .field {
-    box-sizing: border-box;
-    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+    background: #eee;
+    margin-bottom: 15px;
 }
 
+/* Buttons */
+.btn {
+    padding: 12px 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.btn-primary { background: var(--accent-yellow); color: #000; width: 100%; }
+.btn-primary:hover { background: #fff; box-shadow: 0 0 10px var(--accent-yellow); }
+.btn-dark { background: var(--primary-blue); color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+.btn-danger { background: var(--accent-red); color: #fff; width: 100%; }
+
+/* News Slider mit GIF Hintergrund & zentrierten Pfeilen */
 .news-wrapper {
     position: relative;
     width: 100%;
-    max-width: 1100px;
-    margin: 30px auto 50px auto;
-}
-
-#news-slider {
-    position: relative;
+    border-radius: 20px;
     overflow: hidden;
-    border-radius: 18px;
-    height: 300px;
+    margin-bottom: 40px;
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
 }
 
-/* Jede Slide */
-.news-slide {
-    position: absolute;
-    inset: 0;
-    background-size: contain;    /* GANZES BILD anzeigen */
+#news-slider { 
+    height: 350px; 
+    background: url('img/beer-10.gif') center center;
+    background-size: cover;
+    position: relative;
+}
+
+.news-slide { 
+    position: absolute; 
+    inset: 0; 
+    background-size: contain; 
     background-repeat: no-repeat;
-    background-position: center;
-    background-color: #00000040; /* Hintergrund leicht abdunkeln */
-    opacity: 0;
-    transition: opacity .5s ease;
-    cursor: pointer;
+    background-position: center; 
+    opacity: 0; 
+    transition: 0.5s; 
+    background-color: rgba(0, 0, 0, 0.2); 
 }
 
+.news-slide.active { opacity: 1; }
 
-.news-slide.active {
-    opacity: 1;
-}
-
-/* Text unten mittig */
-.news-text {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0,0,0,0.55);
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 12px;
-    font-size: 22px;
-    font-weight: bold;
-    z-index: 10;
-}
-
-/* Pfeile */
 .news-nav {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0,0,0,0.4);
+    background: rgba(10, 25, 47, 0.7);
     color: white;
-    font-size: 38px;
+    font-size: 28px;
     border: none;
-    padding: 10px 18px;
+    padding: 20px 15px;
+    cursor: pointer;
+    z-index: 100;
+    transition: 0.3s;
+}
+
+.news-nav:hover { background: var(--accent-yellow); color: #000; }
+.news-nav.left { left: 0; border-radius: 0 10px 10px 0; }
+.news-nav.right { right: 0; border-radius: 10px 0 0 10px; }
+
+.news-text {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(10, 25, 47, 0.9);
+    color: var(--accent-yellow);
+    padding: 12px 25px;
     border-radius: 12px;
-    cursor: pointer;
-    z-index: 20;
-}
-
-.news-nav.left { left: 20px; }
-.news-nav.right { right: 20px; }
-
-.news-nav:hover {
-    background: rgba(0,0,0,0.7);
-}
-
-/* Punkte */
-#news-dots {
-    margin-top: 12px;
+    font-weight: bold;
     text-align: center;
+    border: 1px solid var(--accent-yellow);
+    white-space: nowrap;
 }
 
-.news-dot {
-    width: 12px;
-    height: 12px;
-    background: #fff;
-    opacity: 0.5;
-    margin: 4px;
-    border-radius: 50%;
-    display: inline-block;
-    cursor: pointer;
+/* Warenkorb Drawer */
+.drawer {
+    position: fixed; 
+    inset: 0; 
+    background: rgba(0,0,0,0.8);
+    display: none; 
+    justify-content: flex-end; 
+    z-index: 2000;
+}
+.drawer.open { display: flex; }
+
+.drawer-panel {
+    background: #fdfdfd; 
+    width: 420px; 
+    height: 100%; 
+    padding: 30px; 
+    overflow-y: auto; 
+    color: var(--text-dark);
+    box-sizing: border-box;
+    box-shadow: -5px 0 25px rgba(0,0,0,0.5);
 }
 
-.news-dot.active {
-    opacity: 1;
-    background: #ffd700;
+.field {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: inherit;
 }
 
+.field:focus { border-color: var(--accent-yellow); outline: none; }
 
+h2 { 
+    color: var(--accent-yellow); 
+    border-left: 6px solid var(--accent-red); 
+    padding-left: 15px; 
+    margin-top: 50px; 
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
-
-
-
+hr { border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 40px 0; }
 </style>
 </head>
 <body>
@@ -477,17 +480,17 @@ body::before {
 
 <div class="container">
 
-    <h2>🎨 Personalisierte Produkte</h2>
+    <h2> Personalisierte Produkte</h2>
     <div class="product-grid" id="area-custom"></div>
 
     <hr style="margin:40px 0">
 
-    <h2>😂 Meme Shirts</h2>
+    <h2> Meme Shirts</h2>
     <div class="product-grid" id="area-meme"></div>
 
     <hr style="margin:40px 0">
 
-    <h2>🍺 Merch</h2>
+    <h2> Merch</h2>
     <div class="product-grid" id="area-merch"></div>
 
 </div>
